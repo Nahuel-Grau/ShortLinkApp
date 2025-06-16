@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\ShortLink;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use App\Models\Link;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+
+
+class shortLinkController extends Controller
+{
+
+    public function index()
+    {
+       
+    }
+
+    public function store(Request $request)
+    {
+        try {
+        $validated = $request->validate([
+            'link' => 'required|url',
+        ]);
+
+        $link = Link::create(['link' => $validated['link']]);
+        $short = Str::random(7);
+
+        $shortLink = Shortlink::create([
+            'shortLink' => $short,
+            'link_id' => $link->id
+        ]);
+
+        return response()->json([
+            'original_link' => $link->link,
+            'short_link' => url('/' . $shortLink->shortLink)
+        ], 201); // 201 Created
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json([
+            'error' => 'Datos inválidos',
+            'messages' => $e->errors(),
+        ], 422); // Unprocessable Entity
+
+    } catch (\Exception $e) {
+        // Opcional: guardar el error en logs
+        Log::error('Error al generar link: ' . $e->getMessage());
+
+        return response()->json([
+            'error' => 'Error interno del servidor',
+            'message' => $e->getMessage(), // Quitar en producción por seguridad
+        ], 500); // Internal Server Error
+    }
+        
+
+    }
+
+   
+    public function show(ShortLink $shortLink)
+    {
+        
+    }
+
+    
+    public function update(Request $request, ShortLink $shortLink)
+    {
+        
+    }
+
+   
+    public function destroy(ShortLink $shortLink)
+    {
+      
+    }
+}
