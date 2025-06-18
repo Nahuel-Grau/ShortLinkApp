@@ -28,12 +28,15 @@ class shortLinkController extends Controller
         ]);
 
         $link = Link::create(['link' => $validated['link']]);
+        $link->save();
+
         $short = Str::random(7);
 
         $shortLink = Shortlink::create([
             'shortLink' => $short,
             'link_id' => $link->id
         ]);
+        $shortLink->save();
 
         return response()->json([
             'original_link' => $link->link,
@@ -59,6 +62,14 @@ class shortLinkController extends Controller
 
     }
 
+    public function redirect($url)
+    {
+        $shortLink = Shortlink::where('shortLink', $url)->firstOrFail();
+        $link = Link::find($shortLink->link_id);
+    
+        // Redirigir al enlace original
+        return redirect()->to($link->link);
+    }
    
     public function show(ShortLink $shortLink)
     {
