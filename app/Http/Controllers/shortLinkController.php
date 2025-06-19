@@ -8,8 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use App\Models\Link;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class shortLinkController extends Controller
@@ -27,10 +31,19 @@ class shortLinkController extends Controller
             'link' => 'required|url',
         ]);
 
-        $link = Link::create(['link' => $validated['link']]);
-        $link->save();
-
         $short = Str::random(7);
+
+        if( auth('api')->check()) {
+            
+            $user =auth('api')->id();
+            $link = Link::create(['link' => $validated['link'],
+                                  'user_id' => $user]);
+            $link->save();
+            
+        }else{
+            $link = Link::create(['link' => $validated['link']]);
+            $link->save();
+        }
 
         $shortLink = Shortlink::create([
             'shortLink' => $short,
