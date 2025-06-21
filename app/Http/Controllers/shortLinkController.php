@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TemporaryLinkCreated;
 use App\Models\ShortLink;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -43,6 +44,7 @@ class shortLinkController extends Controller
         }else{
             $link = Link::create(['link' => $validated['link']]);
             $link->save();
+            
         }
 
         $shortLink = Shortlink::create([
@@ -50,7 +52,7 @@ class shortLinkController extends Controller
             'link_id' => $link->id
         ]);
         $shortLink->save();
-
+        event(new TemporaryLinkCreated($shortLink));
         return response()->json([
             'original_link' => $link->link,
             'short_link' => url('/' . $shortLink->shortLink)
