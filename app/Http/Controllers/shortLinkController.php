@@ -44,6 +44,7 @@ class shortLinkController extends Controller
         }else{
             $link = Link::create(['link' => $validated['link']]);
             $link->save();
+            event(new TemporaryLinkCreated($link));
             
         }
 
@@ -52,7 +53,7 @@ class shortLinkController extends Controller
             'link_id' => $link->id
         ]);
         $shortLink->save();
-        event(new TemporaryLinkCreated($shortLink));
+        
         return response()->json([
             'original_link' => $link->link,
             'short_link' => url('/' . $shortLink->shortLink)

@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Listeners\ScheduleLinkDeletion;
+use App\Models\Link;
 use App\Models\ShortLink;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -16,11 +17,11 @@ class TemporaryLinkCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $shortLink;
+    public $link;
    
-    public function __construct(ShortLink $shortLink)
+    public function __construct(Link $link)
     {
-      $this->shortLink = $shortLink;
+      $this->link = $link;
     }
 
     /**
