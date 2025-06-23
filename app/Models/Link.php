@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Link extends Model
 {
-    protected $fillable = ['link', 'user_id'];
+    protected $fillable = ['link', 'user_id', 'expires_at'];
 
     public function shortLink()
     {

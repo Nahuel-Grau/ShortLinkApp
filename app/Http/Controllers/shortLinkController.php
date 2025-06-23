@@ -33,18 +33,25 @@ class shortLinkController extends Controller
         ]);
 
         $short = Str::random(7);
+       
+      do {
+            $short = Str::random(8);
+        } while (ShortLink::where('shortLink', $short)->exists());
+
 
         if( auth('api')->check()) {
             
             $user =auth('api')->id();
             $link = Link::create(['link' => $validated['link'],
-                                  'user_id' => $user]);
+                                  'user_id' => $user,
+                                   ]);
             $link->save();
             
         }else{
-            $link = Link::create(['link' => $validated['link']]);
+            $link = Link::create(['link' => $validated['link'],
+                                  'expires_at' =>now()->addSecond(30)]);
             $link->save();
-            event(new TemporaryLinkCreated($link));
+           // event(new TemporaryLinkCreated($link));
             
         }
 
