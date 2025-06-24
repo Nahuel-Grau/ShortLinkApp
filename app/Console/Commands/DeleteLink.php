@@ -3,8 +3,12 @@
 namespace App\Console\Commands;
 
 use App\Models\Link;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Console\Command;
+
+
+
+use function Illuminate\Log\log;
 
 class DeleteLink extends Command
 {
@@ -13,7 +17,7 @@ class DeleteLink extends Command
      *
      * @var string
      */
-    protected $signature = 'app:delete-link';
+    protected $signature = 'api:deleteLink';
 
     /**
      * The console command description.
@@ -27,12 +31,7 @@ class DeleteLink extends Command
      */
     public function handle()
     {
-        $link = Link::where("expires_at"); 
-       
-      if (Carbon::now()->gt($link->expires_at)) {
-        
-        //$link->delete();
-   
-}
+   Link::where('expires_at', '<', now())->delete();
+
     }
 }
