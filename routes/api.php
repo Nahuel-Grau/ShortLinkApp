@@ -15,3 +15,6 @@ Route::post('/login',[UserController::class, 'login'])
 Route::post('/shortlinks',[shortLinkController::class, 'store'])
     ->name('shortlinks.store');
 
+Route::get('/shortlinks', [shortLinkController::class, 'index'])
+    ->name('shortlinks.get');
+

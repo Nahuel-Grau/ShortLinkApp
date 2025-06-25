@@ -22,7 +22,20 @@ class shortLinkController extends Controller
 
     public function index()
     {
-       
+       if (auth('api')->check()) {
+          $userId =auth('api')->id();
+
+        $links = Link::where('user_id', $userId)->get();
+
+        return response()->json([
+            'links' => $links
+        ]);
+    }
+
+    return response()->json([
+        'message' => 'Unauthorized'
+    ], 401);
+
     }
 
     public function store(Request $request)
