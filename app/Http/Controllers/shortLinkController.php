@@ -64,7 +64,7 @@ class shortLinkController extends Controller
             $link = Link::create(['link' => $validated['link'],
                                   'expires_at' =>now()->addSecond(30)]);
             $link->save();
-           // event(new TemporaryLinkCreated($link));
+           
             
         }
 
@@ -102,22 +102,13 @@ class shortLinkController extends Controller
     {
         $shortLink = Shortlink::where('shortLink', $url)->firstOrFail();
         $link = Link::find($shortLink->link_id);
+        // $shortLink->count ++;
+        // $shortLink->save();
     
         // Redirigir al enlace original
         return redirect()->to($link->link);
     }
    
-    public function show(ShortLink $shortLink)
-    {
-        
-    }
-
-    
-    public function update(Request $request, ShortLink $shortLink)
-    {
-        
-    }
-
    
     public function destroy(ShortLink $shortLink)
     {
