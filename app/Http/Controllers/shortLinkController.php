@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\TemporaryLinkCreated;
 use App\Models\ShortLink;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -110,8 +109,29 @@ class shortLinkController extends Controller
     }
    
    
-    public function destroy(ShortLink $shortLink)
+    public function destroy($id)
     {
-      
+       try{
+            auth('api')->check();
+            $user =auth('api')->id();
+            $user_id = Link::find($id)->user_id;
+            if($user == $user_id){
+                $linkDelete = Link::find($id);
+                $linkDelete->delete();
+
+                return response()->json([
+                    'message' => 'Eliminado con exito'
+                ],200);
+            }
+        throw new \Exception("Algo salió mal");
+ 
+        }catch(\Exception $e){
+           
+            return response()->json([
+            'error' => 'No tienes acceso',
+            'message' => $e->getMessage(), 
+        ], 403); 
+            
+        }
     }
 }

@@ -18,3 +18,6 @@ Route::post('/shortlinks',[shortLinkController::class, 'store'])
 Route::get('/shortlinks', [shortLinkController::class, 'index'])
     ->name('shortlinks.get');
 
+Route::post('/shortlinks/delete/{id}', [shortLinkController::class, 'destroy'])
+    ->name('shortlinks.destroy');
+
