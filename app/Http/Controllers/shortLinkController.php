@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
-
-
+use Illuminate\Support\Facades\DB;
 
 class shortLinkController extends Controller
 {
@@ -115,7 +114,7 @@ class shortLinkController extends Controller
             auth('api')->check();
             $user =auth('api')->id();
             $user_id = Link::find($id)->user_id;
-            if($user == $user_id){
+            if($user == $user_id && Link::where('user_id', $user_id)->exists()){
                 $linkDelete = Link::find($id);
                 $linkDelete->delete();
 
