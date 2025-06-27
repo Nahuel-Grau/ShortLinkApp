@@ -11,11 +11,10 @@ Route::post('/register',[UserController::class, 'register'])
 Route::post('/login',[UserController::class, 'login'])
     ->name('login');
 
-
 Route::post('/shortlinks',[shortLinkController::class, 'store'])
     ->name('shortlinks.store');
 
-Route::get('/shortlinks', [shortLinkController::class, 'index'])
+Route::get('/shortlinks', [shortLinkController::class, 'getLinkCount'])
     ->name('shortlinks.get');
 
 Route::post('/shortlinks/delete/{id}', [shortLinkController::class, 'destroy'])

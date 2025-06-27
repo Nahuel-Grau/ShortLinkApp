@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 class shortLinkController extends Controller
 {
 
+
     public function index()
     {
        if (auth('api')->check()) {
@@ -35,6 +36,7 @@ class shortLinkController extends Controller
     ], 401);
 
     }
+
 
     public function store(Request $request)
     {
@@ -84,26 +86,23 @@ class shortLinkController extends Controller
         ], 422); // Unprocessable Entity
 
     } catch (\Exception $e) {
-        // Opcional: guardar el error en logs
+        
         Log::error('Error al generar link: ' . $e->getMessage());
 
         return response()->json([
             'error' => 'Error interno del servidor',
-            'message' => $e->getMessage(), // Quitar en producción por seguridad
+            'message' => $e->getMessage(),
         ], 500); // Internal Server Error
     }
         
 
     }
 
+
     public function redirect($url)
     {
         $shortLink = Shortlink::where('shortLink', $url)->firstOrFail();
         $link = Link::find($shortLink->link_id);
-        // $shortLink->count ++;
-        // $shortLink->save();
-    
-        // Redirigir al enlace original
         return redirect()->to($link->link);
     }
    
@@ -119,7 +118,7 @@ class shortLinkController extends Controller
                 $linkDelete->delete();
 
                 return response()->json([
-                    'message' => 'Eliminado con exito'
+                    'message' => 'Eliminado con éxito'
                 ],200);
             }
         throw new \Exception("Algo salió mal");
@@ -132,5 +131,31 @@ class shortLinkController extends Controller
         ], 403); 
             
         }
+    }
+
+
+    public function getLinkCount(){
+     if (auth('api')->check()) {
+        $userId = auth('api')->id();
+        $links = Link::where('user_id', $userId)->get();
+
+        $linkIds = $links->pluck('id');
+
+        $shortLink = ShortLink::whereIn('link_id', $linkIds);
+        $firstShortLink = $shortLink->first();
+        $clicks = $shortLink->count();
+
+        return response()->json([
+            'links' => $links,
+            'clicks' => $clicks,
+            'short_link' => $firstShortLink ? url('/' . $firstShortLink->shortLink) : null
+        ], 200);
+    }
+
+
+    return response()->json([
+        'message' => 'Unauthorized'
+    ], 401);
+
     }
 }
