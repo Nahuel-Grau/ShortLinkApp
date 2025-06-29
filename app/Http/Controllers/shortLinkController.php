@@ -19,25 +19,6 @@ class shortLinkController extends Controller
 {
 
 
-    public function index()
-    {
-       if (auth('api')->check()) {
-          $userId =auth('api')->id();
-
-        $links = Link::where('user_id', $userId)->get();
-
-        return response()->json([
-            'links' => $links
-        ]);
-    }
-
-    return response()->json([
-        'message' => 'Unauthorized'
-    ], 401);
-
-    }
-
-
     public function store(Request $request)
     {
         try {
@@ -70,13 +51,14 @@ class shortLinkController extends Controller
 
         $shortLink = Shortlink::create([
             'shortLink' => $short,
-            'link_id' => $link->id
+            'link_id' => $link->id,
+            'user_id'=> $user
         ]);
         $shortLink->save();
         
         return response()->json([
             'original_link' => $link->link,
-            'short_link' => url('/' . $shortLink->shortLink)
+            'short_link' => url('/' . $shortLink->shortLink,)
         ], 201); // 201 Created
 
     } catch (\Illuminate\Validation\ValidationException $e) {
@@ -138,17 +120,19 @@ class shortLinkController extends Controller
      if (auth('api')->check()) {
         $userId = auth('api')->id();
         $links = Link::where('user_id', $userId)->get();
+        $shortLinks = ShortLink::where('user_id', $userId)->get();
+        $link =  $links->pluck('link');
+        $shortLink = url('/' . $shortLinks->pluck('shortLink'));
+        $clicks = $shortLinks ->pluck('count');
 
-        $linkIds = $links->pluck('id');
-
-        $shortLink = ShortLink::whereIn('link_id', $linkIds);
-        $firstShortLink = $shortLink->first();
-        $clicks = $shortLink->count();
-
+        $LinkCounts = [
+            ["link: ", $link],
+            ["shortLink: ", $shortLink],
+            ["clicks: ", $clicks]
+        ];
+        
         return response()->json([
-            'links' => $links,
-            'clicks' => $clicks,
-            'short_link' => $firstShortLink ? url('/' . $firstShortLink->shortLink) : null
+                       $LinkCounts
         ], 200);
     }
 

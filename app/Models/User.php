@@ -37,6 +37,9 @@ class User extends Authenticatable implements JWTSubject
     public function links(){
         return $this->hasMany(Link::class);
     }
+    public function shortLinks(){
+        return $this->hasMany(ShortLink::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

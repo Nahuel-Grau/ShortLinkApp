@@ -16,6 +16,7 @@ return new class extends Migration
         $table->string('shortLink')->unique();
         $table->unsignedBigInteger('count')->default(0);
         $table->foreignId('link_id')->constrained()->onDelete('cascade');
+          $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
         $table->timestamps();
     });
 }

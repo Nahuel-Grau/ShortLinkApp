@@ -5,7 +5,7 @@ use App\Models\Link;
 
 class ShortLink extends Model
 {
-    protected $fillable = ['shortLink', 'link_id', 'count'];
+    protected $fillable = ['shortLink', 'link_id', 'user_id', 'count'];
 
     public function link()
     {
