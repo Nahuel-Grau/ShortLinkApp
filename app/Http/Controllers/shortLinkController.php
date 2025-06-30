@@ -25,13 +25,14 @@ class shortLinkController extends Controller
         $validated = $request->validate([
             'link' => 'required|url',
         ]);
-
-        $short = Str::random(7);
        
       do {
-            $short = Str::random(8);
+            $short = Str::random(7);
         } while (ShortLink::where('shortLink', $short)->exists());
 
+        if(Link::where('link',$validated)->exists()){
+            $link = Link::where('link', $validated)->id();
+        }
 
         if( auth('api')->check()) {
             
