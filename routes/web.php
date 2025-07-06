@@ -5,7 +5,11 @@ use App\Http\Middleware\CountClicks;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('shortLink');
+    return view('layouts/shortLink');
+});
+
+route::get('/login', function(){
+    return view('layouts/log');
 });
 
 Route::get('/{url}',[shortLinkController::class, 'redirect'])
