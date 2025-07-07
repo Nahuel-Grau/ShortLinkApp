@@ -9,7 +9,7 @@ Route::get('/', function () {
 });
 
 route::get('/login', function(){
-    return view('layouts/log');
+    return view('layouts/login');
 });
 
 Route::get('/{url}',[shortLinkController::class, 'redirect'])
