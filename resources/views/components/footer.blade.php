@@ -10,9 +10,7 @@
     <li class="nav-item"> 
         <a class="nav-link  text-white" href="#">CV</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link disabled  text-white" aria-disabled="true">Disabled</a>
-    </li>
+    
 </ul>
 
     
