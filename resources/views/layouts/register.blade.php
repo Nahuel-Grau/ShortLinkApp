@@ -1,5 +1,6 @@
 @include('components.head')
-<body>
+@include('components.tittle')
+
    
      <div class="d-flex justify-content-center align-items-center vh-60 ">
         <div class="card w-60 h-20" style="background-color: white">
@@ -33,5 +34,4 @@
          @include('components.footer')
     </div>
 
-</body>
-</html>
+

@@ -18,7 +18,10 @@ route::get('/register', function(){
 
 route::post('/logout', function(){
     return view('layouts.shortLink');
-})->name('logout');
+});
+route::get('/myLinks', function(){
+    return view('layouts.myLinks');
+});
 
 Route::get('/{url}',[shortLinkController::class, 'redirect'])
     ->name('shortlinks.redirect')->middleware(CountClicks::class);

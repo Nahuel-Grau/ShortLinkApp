@@ -1,15 +1,16 @@
 
 <div class="position-fixed top-0 end-0 p-3 z-3">
 
-    @auth
-        
-   
-        <form method="POST" action="{{ route('logout') }}">
+        @auth
+            
             @csrf
-            <button type="submit" class="btn text-white  " style="background-color: #0D0D0D">
-                Cerrar sesión
-            </button>
-        </form>
-     @endauth
+
+            <ul class="nav nav-underline">
+              <li class="nav-item" method="POST" action="{{ route('logout') }}" >
+                <a class="nav-link" href="#" style="color: #0D0D0D">Cerrar sesión</a>
+              </li>
+            </ul>
+     
+        @endauth
 </nav>
 </div>
