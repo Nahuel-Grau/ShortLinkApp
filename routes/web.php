@@ -8,6 +8,8 @@ Route::get('/', function () {
     return view('layouts/shortLink');
 });
 
+Route::post('/',[shortLinkController::class, 'store'] );
+
 route::get('/login', function(){
     return view('layouts/login');
 });
@@ -21,6 +23,9 @@ route::post('/logout', function(){
 });
 route::get('/myLinks', function(){
     return view('layouts.myLinks');
+});
+route::get('/shortener', function(){
+    return view('layouts.showShortLink');
 });
 
 Route::get('/{url}',[shortLinkController::class, 'redirect'])

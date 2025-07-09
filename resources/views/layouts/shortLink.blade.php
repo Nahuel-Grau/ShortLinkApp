@@ -5,10 +5,11 @@
  
    
 
+
     <div class="d-flex justify-content-center align-items-center vh-60">
     <div class="card w-60 h-20"  style="background-color: white">
         <div class="card-body" style="width: 30vw; height: 20vh;">          
-            <form>
+            <form action="store" method="POST">
               <div class="mb-3 ">
                 <label for="exampleInputEmail1" class="form-label" style="color: #0D0D0D">Enlace aquí</label>
                 <input type="text" class="form-control" id="Link" aria-describedby="emailHelp">
@@ -21,7 +22,6 @@
             </form>
         </div>
     </div>
-
     </div>
    <div class="d-flex justify-content-center align-items-center vh-60" style="margin:2vh">
     <div class="card w-60 h-20" style="background-color: white">
