@@ -21,6 +21,7 @@ class shortLinkController extends Controller
 
     public function store(Request $request)
     {
+        $user = null;
         try {
         $validated = $request->validate([
             'link' => 'required|url',
@@ -30,22 +31,18 @@ class shortLinkController extends Controller
             $short = Str::random(7);
         } while (ShortLink::where('shortLink', $short)->exists());
 
-        if(Link::where('link',$validated)->exists()){
-            $link = Link::where('link', $validated)->id();
-        }
-
         if( auth('api')->check()) {
             
             $user =auth('api')->id();
             $link = Link::create(['link' => $validated['link'],
                                   'user_id' => $user,
                                    ]);
-            $link->save();
+            
             
         }else{
             $link = Link::create(['link' => $validated['link'],
                                   'expires_at' =>now()->addSecond(30)]);
-            $link->save();
+         
            
             
         }
@@ -55,7 +52,7 @@ class shortLinkController extends Controller
             'link_id' => $link->id,
             'user_id'=> $user
         ]);
-        $shortLink->save();
+       
         
         return response()->json([
             'original_link' => $link->link,
@@ -143,4 +140,12 @@ class shortLinkController extends Controller
     ], 401);
 
     }
+
+    public function logout() {
+    Auth::guard('api')->logout();
+    return response()->json([
+        'status' => 'success',
+        'message' => 'logout'
+    ], 200);
+}
 }

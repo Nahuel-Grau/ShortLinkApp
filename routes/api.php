@@ -20,3 +20,5 @@ Route::get('/shortlinks', [shortLinkController::class, 'getLinkCount'])
 Route::post('/shortlinks/delete/{id}', [shortLinkController::class, 'destroy'])
     ->name('shortlinks.destroy');
 
+route::post('/logout', [shortLinkController::class, 'logout']);
+
