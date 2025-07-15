@@ -49,12 +49,15 @@ class UserController extends Controller
         if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json(['error' => 'Credenciales inválidas'], 401);
         }
-        $user = Auth::user();
-        return response()->json([
-            'message' => 'Inicio de sesión exitoso',
-            'user' => $user,
-            'token' => $token
-        ]);
+        
+      ;
+        $user =JWTAuth::user();
+            
+            return response()->json([
+                'user' => $user,
+                'token' => $token,
+            ]);
+
 
 
     }

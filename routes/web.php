@@ -1,14 +1,16 @@
 <?php
 
 use App\Http\Controllers\shortLinkController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\CountClicks;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('layouts/shortLink');
 });
 
-Route::post('/',[shortLinkController::class, 'store'] );
 
 route::get('/login', function(){
     return view('layouts/login');
@@ -18,14 +20,34 @@ route::get('/register', function(){
     return view('layouts/register');
 });
 
-route::post('/logout', function(){
-    return view('layouts.shortLink');
+Route::post('/login',[UserController::class, 'login'])
+    ->name('login');
+    
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/'); // o ->view() si preferís, pero redirect es mejor
 });
+
 route::get('/myLinks', function(){
     return view('layouts.myLinks');
-});
+})->middleware('auth');;
 route::get('/shortener', function(){
     return view('layouts.showShortLink');
+});
+
+
+Route::post('/sync-session', function (Request $request) {
+    $user = \App\Models\User::find($request->user_id);
+    
+    if ($user) {
+        Auth::login($user);
+        $request->session()->regenerate(); 
+        return response()->json(['message' => 'Sesión web creada']);
+    }
+    
+    return response()->json(['error' => 'Usuario no encontrado'], 404);
 });
 
 Route::get('/{url}',[shortLinkController::class, 'redirect'])

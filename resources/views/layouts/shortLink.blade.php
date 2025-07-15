@@ -1,6 +1,6 @@
 @include('components.head')
 @include('components.tittle')
-@include('components.logout')
+{{-- @include('components.logout') --}}
 
 
 
