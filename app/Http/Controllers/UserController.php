@@ -64,8 +64,9 @@ class UserController extends Controller
 
      public function me()
     {
-        return response()->json(Auth::user());
+        return response()->json(Auth::user()->id);
     }
+
 
     
 }

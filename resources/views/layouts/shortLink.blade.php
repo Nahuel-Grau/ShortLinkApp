@@ -1,6 +1,6 @@
 @include('components.head')
 @include('components.tittle')
-{{-- @include('components.logout') --}}
+@include('components.logout')
 
 
 
@@ -49,42 +49,52 @@
     
 <script>
 document.getElementById('shortenForm').addEventListener('submit', function(e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  const linkInput = document.getElementById('Link').value;
+    const linkInput = document.getElementById('Link').value;
+    const token = localStorage.getItem('token');
 
-  fetch('/api/shortlinks', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      link: linkInput
+    fetch('/api/shortlinks', {
+        method: 'POST',
+          headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+      },
+        body: JSON.stringify({
+            link: linkInput
+        })
     })
-  })
-  .then(response => {
-    if (!response.ok) {
-      return response.json().then(err => { throw err });
-    }
-    return response.json();
-  })
-  .then(data => {
-    document.getElementById('result').textContent = 'ShortLink: ' + data.short_link;
-  })
-  .catch(error => {
-    let message = 'Error al generar el shortlink.';
-    if (error.messages && error.messages.link) {
-      message = 'Error: ' + error.messages.link[0];
-    }
-    document.getElementById('result').textContent = message;
-  });
-});
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw err });
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Mostrar el shortlink como enlace clickeable
+        document.getElementById('result').innerHTML = 'ShortLink: <a href="' + data.short_link + '" target="_blank">' + data.short_link + '</a>';
+    })
+    .catch(error => {
+        let message = 'Error al generar el shortlink.';
+        if (error.messages && error.messages.link) {
+            message = 'Error: ' + error.messages.link[0];
+        }
+        document.getElementById('result').textContent = message;
+    });
 
-document.getElementById('login').addEventListener('click', function () {
-    window.location.href = '/login';
-  });
-document.getElementById('register').addEventListener('click', function () {
-    window.location.href = '/register';
-  });
+    // Listeners para login y register
+    const loginBtn = document.getElementById('login');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', function () {
+            window.location.href = '/login';
+        });
+    }
+    const registerBtn = document.getElementById('register');
+    if (registerBtn) {
+        registerBtn.addEventListener('click', function () {
+            window.location.href = '/register';
+        });
+    }
+});
 </script>
    

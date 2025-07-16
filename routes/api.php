@@ -7,7 +7,8 @@ use App\Models\User;
 
 Route::post('/register',[UserController::class, 'register'])
     ->name('register');
-
+    
+    Route::middleware('auth')->get('/usuario-id',[UserController::class, 'me']);
 Route::post('/login',[UserController::class, 'login'])
     ->name('login');
 
@@ -22,3 +23,4 @@ Route::post('/shortlinks/delete/{id}', [shortLinkController::class, 'destroy'])-
 
 route::post('/logout', [shortLinkController::class, 'logout'])->middleware('auth:api');
 
+    

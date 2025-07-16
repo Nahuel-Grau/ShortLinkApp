@@ -23,11 +23,9 @@ route::get('/register', function(){
 Route::post('/login',[UserController::class, 'login'])
     ->name('login');
     
-Route::post('/logout', function (Request $request) {
+Route::get('/logout', function () {
     Auth::logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    return redirect('/'); // o ->view() si preferís, pero redirect es mejor
+    return redirect('/');
 });
 
 route::get('/myLinks', function(){

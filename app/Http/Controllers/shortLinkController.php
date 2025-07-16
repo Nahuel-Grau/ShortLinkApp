@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\UserController;
+use Illuminate\Container\Attributes\Log as AttributesLog;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -21,6 +22,11 @@ class shortLinkController extends Controller
 
     public function store(Request $request)
     {
+
+         Log::info('Authorization Header:', [$request->header('Authorization')]);
+        Log::info('User authenticated:', [auth('api')->check()]);
+        Log::info('User ID:', [auth('api')->id()]);
+
         $user = null;
         try {
         $validated = $request->validate([

@@ -6,11 +6,22 @@
             @csrf
 
             <ul class="nav nav-underline">
-              <li class="nav-item" method="POST" action="{{ route('logout') }}" >
-                <a class="nav-link" href="#" style="color: #0D0D0D">Cerrar sesión</a>
+              <li class="nav-item" >
+                <a  class="nav-link" id="logout" style="color: #0D0D0D">Cerrar sesión</a>
               </li>
             </ul>
      
         @endauth
 </nav>
 </div>
+
+<script>
+const logoutBtn = document.getElementById('logout');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', function () {
+        localStorage.removeItem('token');
+        // Redirige o recarga la página si lo necesitas
+        window.location.href = '/logout';
+    });
+}
+</script>
