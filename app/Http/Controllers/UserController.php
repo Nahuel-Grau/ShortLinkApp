@@ -36,7 +36,6 @@ class UserController extends Controller
         }
 
         return response()->json([
-            'message' => 'Usuario registrado correctamente',
             'user' => $user,
             'token' => $token
         ], 201);

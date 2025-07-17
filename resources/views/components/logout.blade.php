@@ -5,11 +5,11 @@
             
             @csrf
 
-            <ul class="nav nav-underline">
-              <li class="nav-item" >
-                <a  class="nav-link" id="logout" style="color: #0D0D0D">Cerrar sesión</a>
-              </li>
-            </ul>
+          
+             
+                <a  class="" id="logout" style="color: #0D0D0D;text-decoration: none; ">Cerrar sesión</a>
+             
+          
      
         @endauth
 </nav>
@@ -20,8 +20,7 @@ const logoutBtn = document.getElementById('logout');
 if (logoutBtn) {
     logoutBtn.addEventListener('click', function () {
         localStorage.removeItem('token');
-        // Redirige o recarga la página si lo necesitas
-        window.location.href = '/logout';
+         window.location.href = '/logout';
     });
 }
 </script>

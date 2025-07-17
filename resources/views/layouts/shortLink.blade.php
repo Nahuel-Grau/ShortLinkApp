@@ -36,7 +36,7 @@
 
         @auth
            <div class="text" style="color: #0D0D0D"><h3>Quieres ver tus ShortLinks?</h3> </div>
-           <button type="button" class="btn btn-lg mb-3 w-50 text-white" style="background-color: #0D0D0D">Mis ShortLinks</button>
+           <button type="button" class="btn btn-lg mb-3 w-50 text-white" id="myShortLinks" style="background-color: #0D0D0D">Mis ShortLinks</button>
         @endauth
         
       </div>
@@ -59,9 +59,11 @@ document.getElementById('shortenForm').addEventListener('submit', function(e) {
           headers: {
           'Content-Type': 'application/json',
           ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+          
       },
         body: JSON.stringify({
             link: linkInput
+            
         })
     })
     .then(response => {
@@ -71,7 +73,6 @@ document.getElementById('shortenForm').addEventListener('submit', function(e) {
         return response.json();
     })
     .then(data => {
-        // Mostrar el shortlink como enlace clickeable
         document.getElementById('result').innerHTML = 'ShortLink: <a href="' + data.short_link + '" target="_blank">' + data.short_link + '</a>';
     })
     .catch(error => {
@@ -82,19 +83,26 @@ document.getElementById('shortenForm').addEventListener('submit', function(e) {
         document.getElementById('result').textContent = message;
     });
 
-    // Listeners para login y register
-    const loginBtn = document.getElementById('login');
+   
+});
+
+ const loginBtn = document.getElementById('login');
     if (loginBtn) {
         loginBtn.addEventListener('click', function () {
             window.location.href = '/login';
         });
     }
-    const registerBtn = document.getElementById('register');
+const registerBtn = document.getElementById('register');
     if (registerBtn) {
         registerBtn.addEventListener('click', function () {
             window.location.href = '/register';
         });
-    }
-});
+}
+const myLinksBtn = document.getElementById('myShortLinks');
+    if (myLinksBtn) {
+        myLinksBtn.addEventListener('click', function () {
+            window.location.href = '/myLinks';
+        });
+}
 </script>
    

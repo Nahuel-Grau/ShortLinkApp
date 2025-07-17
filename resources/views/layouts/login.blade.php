@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const emailInput = emailField.value;
     const passwordInput = passwordField.value;
 
-    // Paso 1: login con la API (JWT)
     fetch('/api/login', {
       method: 'POST',
       headers: {
@@ -67,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
       return response.json();
     })
     .then(data => {
-      // Paso 2: validaciones y guardar token
       if (!data.token) {
         throw new Error('No se recibió token');
       }
@@ -77,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       localStorage.setItem('token', data.token);
 
-      // Paso 3: retornamos el fetch a /sync-session
       return fetch('/sync-session', {
         method: 'POST',
         headers: {
@@ -96,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .then(() => {
       console.log('✅ Sesión web sincronizada');
-      window.location.href = '/'; // Redirección final
+      window.location.href = '/'; 
     })
     .catch(error => {
       console.error('Error en login:', error);
