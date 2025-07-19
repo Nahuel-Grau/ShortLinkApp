@@ -23,7 +23,7 @@ class shortLinkController extends Controller
     public function store(Request $request)
     {
 
-         Log::info('Authorization Header:', [$request->header('Authorization')]);
+        Log::info('Authorization Header:', [$request->header('Authorization')]);
         Log::info('User authenticated:', [auth('api')->check()]);
         Log::info('User ID:', [auth('api')->id()]);
 
@@ -125,19 +125,24 @@ class shortLinkController extends Controller
         $userId = auth('api')->id();
         $links = Link::where('user_id', $userId)->get();
         $shortLinks = ShortLink::where('user_id', $userId)->get();
-        $link =  $links->pluck('link');
-        $shortLink = url('/' . $shortLinks->pluck('shortLink'));
-        $clicks = $shortLinks ->pluck('count');
+        //  $link =  $links->pluck('link');
+        // $shortLink = url('/' . $shortLinks->pluck('shortLink'));
+        // $clicks = $shortLinks ->pluck('count');
 
-        $LinkCounts = [
-            ["link: ", $link],
-            ["shortLink: ", $shortLink],
-            ["clicks: ", $clicks]
-        ];
+        $result = [];
+
+         foreach ($shortLinks as $shortLink) {
+            $link = $links->where('id', $shortLink->link_id)->first();
+            $result[] = [
+                'link' => $link ? $link->link : null,
+                'shortLink' => url('/' . $shortLink->shortLink),
+                'clicks' => $shortLink->count,
+                'id' => $shortLink->id
+            ];
+        }
         
-        return response()->json([
-                       $LinkCounts
-        ], 200);
+        
+        return response()->json($result, 200);
     }
 
 
