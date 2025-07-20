@@ -18,7 +18,7 @@ Route::post('/shortlinks',[shortLinkController::class, 'store'])
 Route::get('/shortlinks', [shortLinkController::class, 'getLinkCount'])
     ->name('shortlinks.get');
 
-Route::post('/shortlinks/delete/{id}', [shortLinkController::class, 'destroy'])->middleware('auth:api')
+Route::post('/shortlinks/delete/{linkId}', [shortLinkController::class, 'destroy'])->middleware('auth:api')
     ->name('shortlinks.destroy');
 
 route::post('/logout', [shortLinkController::class, 'logout'])->middleware('auth:api');

@@ -93,14 +93,14 @@ class shortLinkController extends Controller
     }
    
    
-    public function destroy($id)
+    public function destroy($linkId)
     {
        try{
             auth('api')->check();
             $user =auth('api')->id();
-            $user_id = Link::find($id)->user_id;
+            $user_id = Link::find($linkId)->user_id;
             if($user == $user_id && Link::where('user_id', $user_id)->exists()){
-                $linkDelete = Link::find($id);
+                $linkDelete = Link::find($linkId);
                 $linkDelete->delete();
 
                 return response()->json([
@@ -137,7 +137,7 @@ class shortLinkController extends Controller
                 'link' => $link ? $link->link : null,
                 'shortLink' => url('/' . $shortLink->shortLink),
                 'clicks' => $shortLink->count,
-                'id' => $shortLink->id
+                'id' => $link->id
             ];
         }
         

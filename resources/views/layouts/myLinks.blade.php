@@ -19,10 +19,9 @@
                 <tr>
                 <th scope="row" id="link"></th>
                 <td id="shortLink"></td>
-                <td id="clicks"></td>
-                
-                
+                <td id="clicks"></td>                
                 </tr>
+            </tbody>
         </table>
 @include('components.footer')
         
@@ -31,7 +30,7 @@
    
     const token = localStorage.getItem('token');
     const tbody = document.querySelector('tbody');
-
+    
 
     fetch('/api/shortlinks', {
         method: 'GET',
@@ -69,21 +68,23 @@
  
     tbody.addEventListener('click', function(e) {
         if (e.target && e.target.classList.contains('btn-danger')) {
-            const linkId = link.id
+            let linkId = e.target.id;console.log(linkId)
             fetch('/api/shortlinks/delete/' + linkId, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+                    
                 }
             })
             .then(response => {
                 if (!response.ok) throw new Error('Error al eliminar');
-                // Elimina la fila de la tabla
+                
                 e.target.closest('tr').remove();
             })
             .catch(error => {
-                console.error('❌ Error al eliminar:', error);
+               
+                console.error('Error al eliminar:', error);
             });
         }
     });
