@@ -1,40 +1,39 @@
 @include('components.head')
 @include('components.tittle')
 
-   
-     <div class="d-flex justify-content-center align-items-center vh-60 ">
-        <div class="card w-60 h-20" style="background-color: white">
-            <div class="card-body" style="width: 35vw; height: 40vh; background-color: white">          
-            
-        <form id="registerform">
-       
-            <div class="mb-3">                
-                <label for="exampleInputEmail1" class="form-label" style="color: #0D0D0D">Nombre </label>
-                <input type="text" class="form-control" id="name" aria-describedby="emailHelp">               
-            </div>
-            <div class="mb-3">                
-                <label for="exampleInputEmail1" class="form-label" style="color: #0D0D0D">Email </label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">               
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body bg-white">
+          <form id="registerform">
+            <div class="mb-3">
+              <label for="name" class="form-label text-dark">Nombre</label>
+              <input type="text" class="form-control" id="name" required>
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label" style="color: #0D0D0D">Contraseña</label>
-                <input type="password" class="form-control" id="password">
+              <label for="email" class="form-label text-dark">Email</label>
+              <input type="email" class="form-control" id="email" required>
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label" style="color: #0D0D0D">Confirmar contraseña</label>
-                <input type="password" class="form-control" id="password2">
+              <label for="password" class="form-label text-dark">Contraseña</label>
+              <input type="password" class="form-control" id="password" required>
+            </div>
+            <div class="mb-3">
+              <label for="password2" class="form-label text-dark">Confirmar contraseña</label>
+              <input type="password" class="form-control" id="password2" required>
             </div>
             <div class="d-flex justify-content-center">
-            <button type="submit" class="btn text-white  " style="background-color: #0D0D0D">Registrar</button>
+              <button type="submit" class="btn text-white" style="background-color: #0D0D0D">Registrar</button>
             </div>
-        </form>
-            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 
-         @include('components.footer')
-    </div>
-
+@include('components.footer')
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

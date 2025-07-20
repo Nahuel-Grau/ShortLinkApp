@@ -4,7 +4,7 @@
     <div class="container vh-100" >
         @include('components.tittle')
     
-
+  <div class="table-responsive"> 
         <table class="table table-dark table-striped">
             <thead>
                 <tr style="background-color: #0D0D0D; color: white;">
@@ -23,6 +23,7 @@
                 </tr>
             </tbody>
         </table>
+  </div>
 @include('components.footer')
         
 <script>
