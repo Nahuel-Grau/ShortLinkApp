@@ -47,7 +47,6 @@
     return response.json();
     })
     .then(data => {
-    console.log('✅ Datos:', data);
     const tbody = document.querySelector('tbody');
     tbody.innerHTML = ''; // Limpia la tabla
 
@@ -55,7 +54,7 @@
         tbody.innerHTML += `
             <tr>
                 <th scope="row">${link.link}</th>
-                <td>${link.shortLink}</td>
+                <td><a href="${link.shortLink}">${link.shortLink}</a></td> 
                 <td>${link.clicks}</td>
                 <td><button type="button" class="btn btn-danger" id="${link.id}">eliminar</button></td>
             </tr>
@@ -69,7 +68,7 @@
  
     tbody.addEventListener('click', function(e) {
         if (e.target && e.target.classList.contains('btn-danger')) {
-            let linkId = e.target.id;console.log(linkId)
+            let linkId = e.target.id;
             fetch('/api/shortlinks/delete/' + linkId, {
                 method: 'POST',
                 headers: {

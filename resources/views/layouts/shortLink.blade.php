@@ -2,13 +2,6 @@
 @include('components.tittle')
 @include('components.logout')
 
-
-
-
- @include('components.head')
-@include('components.logout')
-
-<!-- Primera tarjeta: Formulario -->
 <div class="container my-5">
   <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6">
@@ -35,7 +28,7 @@
   </div>
 </div>
 
-<!-- Segunda tarjeta: Botones de login/register o "Mis ShortLinks" -->
+
 <div class="container my-4">
   <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6">

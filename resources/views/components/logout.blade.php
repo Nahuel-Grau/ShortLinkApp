@@ -7,7 +7,7 @@
 
           
              
-                <a  class="" id="logout" style="color: #0D0D0D;text-decoration: none; ">Cerrar sesión</a>
+                <button  class="" id="logout" style="color: #0D0D0D;text-decoration: none; ">Cerrar sesión</button>
              
           
      
@@ -16,11 +16,14 @@
 </div>
 
 <script>
-const logoutBtn = document.getElementById('logout');
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', function () {
-        localStorage.removeItem('token');
-         window.location.href = '/logout';
-    });
-}
+ document.addEventListener('DOMContentLoaded', function() {
+    const logoutBtn = document.getElementById('logout');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            window.location.href = '/logout';
+        });
+    }
+});
 </script>
